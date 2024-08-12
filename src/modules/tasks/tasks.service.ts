@@ -14,4 +14,12 @@ export class TasksService {
         const createdTask = await this.tasksRepository.save(task)
         // await this.tasksRepository.save()
     }
+
+    async findAll(){
+        return await this.tasksRepository.find()
+    }
+
+    async findOne(id){
+        return await this.tasksRepository.findOneBy({id})
+    }
 }
