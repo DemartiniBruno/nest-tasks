@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTasksDto } from './dto/create-tasks.dto';
+import { AuthGuard, UserRequest } from 'src/common/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('tasks')
 export class TasksController {
     constructor(
@@ -9,8 +11,11 @@ export class TasksController {
     ){}
  
     @Post()
-    async create(@Body()body: CreateTasksDto){
-        return await this.tasksService.create(body); 
+    async create(
+        @Req() req:UserRequest,
+        @Body()body: CreateTasksDto
+    ){
+        return await this.tasksService.create(body, req.user.sub); 
     }
 
     // @Get()
