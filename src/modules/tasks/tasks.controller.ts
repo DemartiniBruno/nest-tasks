@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } fro
 import { TasksService } from './tasks.service';
 import { CreateTasksDto } from './dto/create-tasks.dto';
 import { AuthGuard, UserRequest } from 'src/common/auth/auth.guard';
+import { UpdateTasksDto } from './dto/update-tasks.dto';
 
 @UseGuards(AuthGuard)
 @Controller('tasks')
@@ -31,13 +32,21 @@ export class TasksController {
         return this.tasksService.findOne(id, req.user.sub)
     }
 
-    // @Patch()
-    // update(){
+    @Patch(':id')
+    update(
+        @Req() req:UserRequest,
+        @Param('id')id,
+        @Body() body: UpdateTasksDto
+    ){
+        return this.tasksService.update(id, req.user.sub, body)
+    }
 
-    // }
-
-    // @Delete()
-    // remove(){
+    @Delete(':id')
+    remove(
+        @Req() req:UserRequest,
+        @Param('id')id,
+    ){
+        return this.tasksService.remove(id, req.user.sub)
         
-    // }
+    }
 }
