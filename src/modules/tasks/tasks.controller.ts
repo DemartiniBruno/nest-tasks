@@ -18,15 +18,18 @@ export class TasksController {
         return await this.tasksService.create(body, req.user.sub); 
     }
 
-    // @Get()
-    // async findAll(){
-    //     return await this.tasksService.findAll()
-    // }
+    @Get()
+    async findAll(@Req() req:UserRequest,){
+        return await this.tasksService.findAll(req.user.sub)
+    }
 
-    // @Get(':id')
-    // findOne(@Param('id')id){
-    //     return this.tasksService.findOne(id)
-    // }
+    @Get(':id')
+    findOne(
+        @Req() req:UserRequest,
+        @Param('id')id
+    ){
+        return this.tasksService.findOne(id, req.user.sub)
+    }
 
     // @Patch()
     // update(){

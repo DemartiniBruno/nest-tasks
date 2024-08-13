@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TasksEntity } from './entities/tasks.entity';
 import { CreateTasksDto } from './dto/create-tasks.dto';
@@ -25,11 +25,26 @@ export class TasksService {
         }
     }
 
-    async findAll(){
-        return await this.tasksRepository.find()
+    async findAll(userId:string){
+        const user = await this.userService.findOne(userId)
+        const tasks:TasksEntity[] = await this.tasksRepository.findBy({user})
+
+        return tasks
     }
 
-    async findOne(id){
-        return await this.tasksRepository.findOneBy({id})
+    async findOne(id:string, userId:string){
+        const user = await this.userService.findOne(userId)
+        const task = await this.tasksRepository.findOne({
+            where:{
+                id: id,
+                user:user
+            }
+        })
+        
+        if(task===null){
+            throw new NotFoundException('Task não encontrada')
+        }
+
+        return task
     }
 }
