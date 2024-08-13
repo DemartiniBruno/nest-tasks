@@ -1,3 +1,4 @@
+import { UsersEntity } from "src/modules/user/entities/user.entity"
 import { TasksEntity } from "../../modules/tasks/entities/tasks.entity"
 import { DataSource } from "typeorm"
 
@@ -15,7 +16,8 @@ export const databaseProvider = [
                 database:process.env.DB_DATABASE,
                 entities:[
                     // __dirname + '/../**/*.entity{.ts,.js}',
-                    TasksEntity
+                    TasksEntity,
+                    UsersEntity
                 ],
                 synchronize:true
             })

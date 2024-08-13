@@ -13,23 +13,23 @@ export class TasksController {
         return await this.tasksService.create(body); 
     }
 
-    @Get()
-    async findAll(){
-        return await this.tasksService.findAll()
-    }
+    // @Get()
+    // async findAll(){
+    //     return await this.tasksService.findAll()
+    // }
 
-    @Get(':id')
-    findOne(@Param('id')id){
-        return this.tasksService.findOne(id)
-    }
+    // @Get(':id')
+    // findOne(@Param('id')id){
+    //     return this.tasksService.findOne(id)
+    // }
 
-    @Patch()
-    update(){
+    // @Patch()
+    // update(){
 
-    }
+    // }
 
-    @Delete()
-    remove(){
+    // @Delete()
+    // remove(){
         
-    }
+    // }
 }
