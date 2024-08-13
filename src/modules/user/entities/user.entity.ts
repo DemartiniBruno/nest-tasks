@@ -13,7 +13,7 @@ export class UsersEntity {
     @Column({name:'email', type:'varchar', length:50})
     email:string;
 
-    @Column({name:'password', type:'varchar', nullable:false, select:false})
+    @Column({name:'password', type:'varchar', nullable:false})
     @Exclude()
     password:string
 

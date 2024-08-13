@@ -1,6 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/modules/user/user.service';
+import { FindUserDto } from './dto/find-user.dto';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -9,14 +11,15 @@ export class AuthService {
         private jwtService: JwtService
     ){}
 
-    async singIn(
-        email: string,
-        password: string
-    ) {
-        const user = await this.userService.findOne(email)
+    async singIn(credentials:FindUserDto) {
+        const user = await this.userService.findEmail(credentials.email)
 
-        //verificar se a senha é igual ao que ele tem no banco
-        if(user.password!==password){
+        const teste = await bcrypt.compare(
+            credentials.password,
+            user.password!,
+        )
+
+        if(!await bcrypt.compare(credentials.password, user.password)){
             throw new UnauthorizedException('Email ou senha incorretos')
         }
 
