@@ -19,6 +19,8 @@ export class UserService {
 
       Object.assign(createdUser, createUserDto as UsersEntity)
 
+      await this.userRepository.save(createdUser)
+
       return {
         success: true,
         message: 'Usuário criado'
@@ -31,10 +33,7 @@ export class UserService {
     }
   }
 
-  // async findAll() {
-  //   return await this.userRepository.find();
-  // }
-
+  //Editar para puxar o Id pelo JWT
   async findOne(id: string) {
     const user = await this.userRepository.findOneBy({ id })
 
@@ -45,11 +44,11 @@ export class UserService {
     return user;
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  async findEmail(email){
+    console.log('teste')
+    // const user = await this.userRepository.findOneBy({email})
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
+    return true
+  }
+
 }
