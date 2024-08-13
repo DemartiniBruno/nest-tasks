@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 
 
 async function bootstrap() {
@@ -16,7 +17,9 @@ async function bootstrap() {
       forbidNonWhitelisted:true
     })
   )
-
+  
+  //Preciso disso para conseguir ler o service nos decorator
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(3000);
 }
 bootstrap();

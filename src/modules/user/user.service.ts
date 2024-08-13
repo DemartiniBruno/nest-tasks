@@ -44,11 +44,10 @@ export class UserService {
     return user;
   }
 
-  async findEmail(email){
-    console.log('teste')
-    // const user = await this.userRepository.findOneBy({email})
+  async teste(email){
+    const user = await this.userRepository.findOneBy({email})
 
-    return true
+    return user
   }
 
 }
