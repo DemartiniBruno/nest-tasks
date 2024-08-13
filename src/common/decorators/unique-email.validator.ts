@@ -11,7 +11,7 @@ export class UniqueEmailValidator implements ValidatorConstraintInterface{
 
     async validate(value: any): Promise<boolean> {
 
-        const user = await this.userService.teste(value) 
+        const user = await this.userService.findEmail(value) 
         if(user!==null){
             return false 
         }

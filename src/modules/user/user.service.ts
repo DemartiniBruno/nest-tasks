@@ -36,18 +36,20 @@ export class UserService {
   //Editar para puxar o Id pelo JWT
   async findOne(id: string) {
     const user = await this.userRepository.findOneBy({ id })
-
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado')
-    }
-
+    this.verifyUser(user)
     return user;
   }
 
-  async teste(email){
+  async findEmail(email){
     const user = await this.userRepository.findOneBy({email})
-
+    this.verifyUser(user)
     return user
+  }
+
+  private verifyUser(user){
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado')
+    }
   }
 
 }
