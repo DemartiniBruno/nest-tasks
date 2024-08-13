@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTasksDto } from './dto/create-tasks.dto';
 import { AuthGuard, UserRequest } from 'src/common/auth/auth.guard';
 import { UpdateTasksDto } from './dto/update-tasks.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @UseGuards(AuthGuard)
 @Controller('tasks')
@@ -20,11 +21,13 @@ export class TasksController {
     }
 
     @Get()
+    @UseInterceptors(CacheInterceptor)
     async findAll(@Req() req:UserRequest,){
         return await this.tasksService.findAll(req.user.sub)
     }
 
     @Get(':id')
+    @UseInterceptors(CacheInterceptor)
     findOne(
         @Req() req:UserRequest,
         @Param('id')id
