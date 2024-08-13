@@ -4,6 +4,12 @@ import { UserService } from 'src/modules/user/user.service';
 import { FindUserDto } from './dto/find-user.dto';
 import * as bcrypt from 'bcrypt'
 
+export interface UserPayload{
+    sub:string,
+    name:string,
+    email:string
+}
+
 @Injectable()
 export class AuthService {
     constructor(
@@ -23,10 +29,10 @@ export class AuthService {
             throw new UnauthorizedException('Email ou senha incorretos')
         }
 
-        const payload = {
-            id:user.id,
-            email: user.email,
-            name: user.name
+        const payload:UserPayload = {
+            sub:user.id,
+            name: user.name,
+            email: user.email
         }
 
         return{

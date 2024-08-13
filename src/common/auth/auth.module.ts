@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
       global:true,
       secret: String(process.env.JWT_SECRET),
       // secret:'paste',
-      signOptions: { expiresIn: '60s'}
+      signOptions: { expiresIn: '60m'}
     })
   ],
   controllers: [AuthController],

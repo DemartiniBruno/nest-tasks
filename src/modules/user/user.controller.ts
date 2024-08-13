@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Header, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { HashPasswordPipe } from 'src/common/pipes/hash-password.pipe';
+import { AuthGuard, UserRequest } from 'src/common/auth/auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -20,8 +20,10 @@ export class UserController {
   }
 
   //Editar para puxar o Id pelo JWT
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  @Get()
+  @UseGuards(AuthGuard)
+  findOne(@Req() req:UserRequest) {
+    // console.log(reqd.user)
+    return this.userService.findOne(req.user.sub);
   }
 }

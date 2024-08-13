@@ -13,10 +13,12 @@ export class UsersEntity {
     @Column({name:'email', type:'varchar', length:50})
     email:string;
 
-    @Column({name:'password', type:'varchar', nullable:false})
     @Exclude()
+    @Column({name:'password', type:'varchar', nullable:false})
     password:string
 
-    @OneToMany(()=>TasksEntity, (task)=>task.user)
+    @OneToMany(()=>TasksEntity, (task)=>task.user,{
+        eager:true
+    })
     tasks:TasksEntity[]
 }

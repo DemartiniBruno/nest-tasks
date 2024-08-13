@@ -38,6 +38,7 @@ export class UserService {
     const user = await this.userRepository.findOneBy({ id })
     this.verifyUser(user)
     return user;
+    console.log(id)
   }
 
   async findEmail(email){
