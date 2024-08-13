@@ -27,7 +27,6 @@ export class TasksService {
     }
 
     async findAll(userId:string){
-        console.log('buscando')
         const user = await this.userService.findOne(userId)
         const tasks:TasksEntity[] = await this.tasksRepository.findBy({user})
 

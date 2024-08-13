@@ -13,6 +13,7 @@ export class UserController {
     @Body() {password, ...createUserDto}: CreateUserDto,
     @Body('password', HashPasswordPipe) hash:string
   ) {
+    // throw new Error('teste')
     return this.userService.create({
       ...createUserDto,
       password: hash
